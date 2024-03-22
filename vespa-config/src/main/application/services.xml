@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services version="1.0">
+
+    <container version="1.0" id="default">
+        <!-- Включает поисковую часть контейнера, без него не будет работать поиск -->
+        <search/>
+        <!-- Включает API для работы с документами -->
+        <document-api/>
+    </container>
+
+    <!-- Создает кластер содержимого который хранит и индексирует документы -->
+    <content id="product" version="1.0">
+        <!-- Определяет какие типы документов должны быть направлены в этот кластер -->
+        <documents>
+            <document type="product" mode="index"/>
+        </documents>
+        <!-- Количество реплик документа в кластере -->
+        <redundancy>2</redundancy>
+        <!-- Определяет набор узлов в кластере -->
+        <nodes>
+            <!-- distribution-key - идентификатор узла для алгоритма распределения данных -->
+            <node hostalias="node-1" distribution-key="0"/>
+            <node hostalias="node-2" distribution-key="1"/>
+            <node hostalias="node-3" distribution-key="2"/>
+        </nodes>
+    </content>
+</services>

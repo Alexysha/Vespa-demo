@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.sportmaster</groupId>
+        <artifactId>vespa</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>vespa-config</artifactId>
+    <!-- Специальная упаковка пакета для Vespa -->
+    <packaging>container-plugin</packaging>
+
+    <dependencies>
+        <!-- Библиотека для работы с Vespa -->
+        <dependency>
+            <groupId>com.yahoo.vespa</groupId>
+            <artifactId>container</artifactId>
+            <version>${vespa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Плагин используется для сборки и упаковки компонентов Vespa в контейнер -->
+            <plugin>
+                <groupId>com.yahoo.vespa</groupId>
+                <artifactId>bundle-plugin</artifactId>
+                <version>${vespa.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- В случае наличия предупреждений, будет ошибка сборки -->
+                    <failOnWarnings>true</failOnWarnings>
+                </configuration>
+            </plugin>
+            <!-- Архивирует компоненты Vespa -->
+            <plugin>
+                <groupId>com.yahoo.vespa</groupId>
+                <artifactId>vespa-application-maven-plugin</artifactId>
+                <version>${vespa.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>packageApplication</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

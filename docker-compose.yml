@@ -1,0 +1,9 @@
+version: "3.8"
+name: vespa
+services:
+  vespa:
+    container_name: vespa
+    image: vespaengine/vespa
+    ports:
+      - "8080:8080"
+      - "19071:19071"
