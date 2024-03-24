@@ -2,5 +2,5 @@
     <!-- Отключение правила - изменения типа индексирования -->
     <allow until="2024-03-07" comment="изменение типа индексирования">indexing-change</allow>
     <!-- Отключение правила - изменения типа поля -->
-    <allow until="2025-03-07" comment="изменение типа поля">field-type-change</allow>
+    <allow until="2024-03-07" comment="изменение типа поля">field-type-change</allow>
 </validation-overrides>

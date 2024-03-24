@@ -12,7 +12,8 @@
     <content id="product" version="1.0">
         <!-- Определяет какие типы документов должны быть направлены в этот кластер -->
         <documents>
-            <document type="product" mode="index"/>
+            <document type="vegetables" mode="index"/>
+            <document type="phone" mode="index"/>
         </documents>
         <!-- Количество реплик документа в кластере -->
         <redundancy>2</redundancy>

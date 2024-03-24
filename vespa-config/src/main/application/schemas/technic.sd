@@ -1,0 +1,30 @@
+# Базовая схема техники
+schema technic inherits product {
+    # Базовый документ техники
+    document technic inherits product {
+        # Можно ли взять кредит
+        field credit type bool {
+            indexing: summary | attribute
+        }
+        # Из-за рубежа
+        field abroad type bool {
+            indexing: summary | attribute
+        }
+        # Вес
+        field weight type int {
+            indexing: summary | attribute
+        }
+        # Высота
+        field height type float {
+            indexing: summary | attribute
+        }
+        # Ширина
+        field width type float {
+            indexing: summary | attribute
+        }
+        # Толщина
+        field depth type float {
+            indexing: summary | attribute
+        }
+    }
+}

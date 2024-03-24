@@ -1,0 +1,38 @@
+# Базовая схема еды
+schema food inherits product {
+    # Базовый документ еды
+    document food inherits product {
+        # Структура пищевой ценности
+        struct nutritional {
+            # Белки
+            field suqirrels type float {}
+            # Жиры
+            field fats type float {}
+            # Углеводы
+            field carbohydratesates type float {}
+        }
+        # Структура энергетической ценности
+        struct energy {
+            # Килоджоулей
+            field joules type int {}
+            # Килокалорий
+            field kcal type int {}
+        }
+        # Состав продукта
+        field composition type array<string> {
+            indexing: summary | index
+        }
+        # Пищевая ценность
+        field nutritional type nutritional {
+            indexing: summary
+        }
+        # Энергетическая ценность
+        field energy type energy {
+            indexing: summary
+        }
+        # Соответствует ГОСТ
+        field GOST type bool {
+            indexing: summary | attribute
+        }
+    }
+}

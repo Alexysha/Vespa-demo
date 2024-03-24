@@ -1,25 +1,26 @@
-# Схема данных
+# Базовая схема продукта
 schema product {
-    # Описывает тип документа
+    # Базовый документ продукта
     document product {
-        # Определяет именование полей, их хранение, индексирование и ранжирование
-        field name type string {
-            # Определяет тип индексирования
+        # Идентификатор
+        field id type long {
             indexing: summary | attribute
         }
-        field size type string {
-          # Определяет тип индексирования
-          indexing: summary  | attribute
+        # Название
+        field name type string {
+            indexing: summary | index
         }
-    }
-
-    # Сводка докуентов, для использования нужно добавить к запросу - "presentation.summary": "demo-summary"
-    document-summary demo-summary {
-        # Вывести поле name
-        summary name type string {}
-        # Вывести поле size и переименовать его в product_size
-        summary product_size type string {
-            source: size
+        # Производитель
+        field producer type string {
+            indexing: summary | index
+        }
+        # Цена
+        field price type string {
+            indexing: summary | attribute
+        }
+        # Описание
+        field description type string {
+            indexing: summary | index
         }
     }
 }

@@ -1,0 +1,10 @@
+# Схема овощей
+schema vegetables inherits food {
+    # Документ овощей
+    document vegetables inherits food {
+        # Сезонный продукт
+        field seasonal type bool {
+            indexing: summary | attribute
+        }
+    }
+}
