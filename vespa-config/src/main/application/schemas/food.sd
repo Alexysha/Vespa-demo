@@ -5,11 +5,11 @@ schema food inherits product {
         # Структура пищевой ценности
         struct nutritional {
             # Белки
-            field suqirrels type float {}
+            field squirrels type float {}
             # Жиры
             field fats type float {}
             # Углеводы
-            field carbohydratesates type float {}
+            field carbohydrates type float {}
         }
         # Структура энергетической ценности
         struct energy {
