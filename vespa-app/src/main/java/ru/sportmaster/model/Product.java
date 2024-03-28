@@ -9,7 +9,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @Data
 @FieldDefaults(level = PRIVATE)
-public class Product {
+public abstract class Product {
 
     long id;
 

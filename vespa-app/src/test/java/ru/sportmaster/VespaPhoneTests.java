@@ -7,9 +7,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import ru.sportmaster.model.Food.Energy;
-import ru.sportmaster.model.Food.Nutritional;
-import ru.sportmaster.model.Vegetables;
+import ru.sportmaster.model.Phone;
 import ru.sportmaster.model.VespaDocument;
 import ru.sportmaster.model.VespaDocument.Fields;
 
@@ -25,18 +23,18 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(OrderAnnotation.class)
-class VegetablesVespaTests {
+class VespaPhoneTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper().disable(FAIL_ON_UNKNOWN_PROPERTIES);
-    private final TypeReference<VespaDocument<Vegetables>> TYPE_REF = new TypeReference<>() {};
+    private final TypeReference<VespaDocument<Phone>> TYPE_REF = new TypeReference<>() {};
 
     @Test
     @Order(1)
     @DisplayName("Пример сохранения документа в Vespa")
-    void saveVegetablesTest() {
+    void savePhoneTest() {
         @Cleanup val client = HttpClient.newHttpClient();
-        val vegetables = getVegetables();
-        val vespaDocument = getVespaDocument(vegetables);
+        val phone = getPhone();
+        val vespaDocument = getVespaDocument(phone);
         val json = objectToJson(vespaDocument);
         val request = HttpRequest.newBuilder()
                 .uri(getUri())
@@ -53,7 +51,7 @@ class VegetablesVespaTests {
     @Test
     @Order(2)
     @DisplayName("Пример получения документа из Vespa")
-    void getVegetablesTest() {
+    void getPhoneTest() {
         @Cleanup val client = HttpClient.newHttpClient();
         val request = HttpRequest.newBuilder()
                 .uri(getUri())
@@ -65,7 +63,7 @@ class VegetablesVespaTests {
         val statusCode = response.statusCode();
         val body = response.body();
         val result = jsonToObject(body);
-        val expected = getVespaDocument(getVegetables());
+        val expected = getVespaDocument(getPhone());
 
         assertEquals(200, statusCode);
         assertEquals(expected, result);
@@ -90,56 +88,49 @@ class VegetablesVespaTests {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    private Vegetables getVegetables() {
-        val vegetables = new Vegetables();
-        vegetables.setId(1);
-        vegetables.setName("Огурец");
-        vegetables.setProducer("ООО Свежие продукты");
-        vegetables.setPrice(BigDecimal.valueOf(100.51));
-        vegetables.setDescription("Свежие огурцы выращенные на русской земле");
-        vegetables.setComposition(List.of("Огурец обыкновенный"));
-        vegetables.setNutritional(getNutritional());
-        vegetables.setEnergy(getEnergy());
-        vegetables.setGOST(true);
-        vegetables.setSeasonal(false);
-        return vegetables;
+    private Phone getPhone() {
+        val phone = new Phone();
+        phone.setId(1);
+        phone.setName("Смартфон Apple iPhone 15 128 ГБ, Dual nano SIM, розовый");
+        phone.setProducer("Apple Computer, Inc");
+        phone.setPrice(BigDecimal.valueOf(68570));
+        phone.setDescription("Встречайте iPhone 15 - ваш идеальный спутник в мире безграничных возможностей!");
+        phone.setCredit(true);
+        phone.setAbroad(false);
+        phone.setWeight(171);
+        phone.setHeight(147.6f);
+        phone.setWidth(71.6f);
+        phone.setDepth(7.8f);
+        phone.setColor("Розовый");
+        phone.setOperation("iOS 17");
+        phone.setScreen(6.1f);
+        phone.setMaterial(
+                List.of("алюминий", "стекло")
+        );
+
+        return phone;
     }
 
-    private Nutritional getNutritional() {
-        val nutritional = new Nutritional();
-        nutritional.setSquirrels(0.65f);
-        nutritional.setFats(0.1f);
-        nutritional.setCarbohydrates(0.65f);
-        return nutritional;
-    }
-
-    private Energy getEnergy() {
-        val energy = new Energy();
-        energy.setJoules(63);
-        energy.setKcal(15);
-        return energy;
-    }
-
-    private VespaDocument<Vegetables> getVespaDocument(Vegetables vegetables) {
-        val fields = new Fields<Vegetables>();
-        fields.setDocument(vegetables);
-        val vespaDocument = new VespaDocument<Vegetables>();
+    private VespaDocument<Phone> getVespaDocument(Phone phone) {
+        val fields = new Fields<Phone>();
+        fields.setDocument(phone);
+        val vespaDocument = new VespaDocument<Phone>();
         vespaDocument.setFields(fields);
         return vespaDocument;
     }
 
     @SneakyThrows
-    private String objectToJson(VespaDocument<Vegetables> document) {
+    private String objectToJson(VespaDocument<Phone> document) {
         return objectMapper.writeValueAsString(document);
     }
 
     @SneakyThrows
-    private VespaDocument<Vegetables> jsonToObject(String json) {
+    private VespaDocument<Phone> jsonToObject(String json) {
         return objectMapper.readValue(json, TYPE_REF);
     }
 
     @SneakyThrows
     private static URI getUri() {
-        return new URI("http://localhost:8080/document/v1/shop/vegetables/docid/1");
+        return new URI("http://localhost:8080/document/v1/shop/phone/docid/1");
     }
 }

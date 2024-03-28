@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 @FieldDefaults(level = PRIVATE)
 @EqualsAndHashCode(callSuper = true)
-public class Food extends Product {
+public abstract class Food extends Product {
 
     List<String> composition;
 
