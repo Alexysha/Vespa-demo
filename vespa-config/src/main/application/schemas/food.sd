@@ -1,6 +1,6 @@
-# Базовая схема еды
+# Базовая схема продуктов питания
 schema food inherits product {
-    # Базовый документ еды
+    # Базовый документ продуктов питания
     document food inherits product {
         # Структура пищевой ценности
         struct nutritional {
@@ -33,6 +33,15 @@ schema food inherits product {
         # Соответствует ГОСТ
         field GOST type bool {
             indexing: summary | attribute
+        }
+    }
+    # Сводка документов, для использования нужно добавить к запросу - "presentation.summary": "demo-summary"
+    document-summary demo-summary {
+        # Вывести поле nutritional
+        summary nutritional type nutritional {}
+        # Вывести поле GOST и переименовать его в international_technical_standards
+        summary international_technical_standards type bool {
+            source: GOST
         }
     }
 }

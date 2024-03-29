@@ -1,5 +1,6 @@
 package ru.sportmaster.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ public abstract class Food extends Product {
     Energy energy;
 
     @JsonProperty("GOST")
+    @JsonAlias("international_technical_standards")
     boolean GOST;
 
     @Data

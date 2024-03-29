@@ -12,6 +12,7 @@ import ru.sportmaster.model.Food.Nutritional;
 import ru.sportmaster.model.Vegetables;
 import ru.sportmaster.model.VespaDocument;
 import ru.sportmaster.model.VespaDocument.Fields;
+import ru.sportmaster.search.SearchBody;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestMethodOrder(OrderAnnotation.class)
 class VegetablesVespaTests {
@@ -63,12 +65,48 @@ class VegetablesVespaTests {
 
         val response = sendRequest(client, request);
         val statusCode = response.statusCode();
+
+        assertEquals(200, statusCode);
+
         val body = response.body();
         val result = jsonToObject(body);
         val expected = getVespaDocument(getVegetables());
 
-        assertEquals(200, statusCode);
         assertEquals(expected, result);
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Пример работы сводки документа: demo-summary")
+    void summaryTest() {
+        @Cleanup val client = HttpClient.newHttpClient();
+        val searchBody = getSearchBody();
+        val json = objectToString(searchBody);
+        val request = HttpRequest.newBuilder()
+                .uri(getSearchUri())
+                .header("content-type", "application/json")
+                .POST(BodyPublishers.ofString(json))
+                .build();
+
+        val response = sendRequest(client, request);
+        val statusCode = response.statusCode();
+
+        assertEquals(200, statusCode);
+
+        val body = response.body();
+        val result = jsonToObject(body).getRoot().getChildren().getFirst().getFields().getDocument();
+        val expected = getVespaDocument(getVegetables());
+
+        assertEquals(expected.getFields().getDocument().isGOST(), result.isGOST(), "Поле не считалось с international_technical_standards");
+        assertEquals(expected.getFields().getDocument().getNutritional(), result.getNutritional(), "Поле не считалось с nutritional");
+        assertNull(result.getName(), "Поле name должно быть пустым, т.к. его нет в сводке документов");
+    }
+
+    private SearchBody getSearchBody() {
+        val searchBody = new SearchBody();
+        searchBody.setYql("select * from vegetables where true");
+        searchBody.setPresentation("demo-summary");
+        return searchBody;
     }
 
     @AfterAll
@@ -134,6 +172,11 @@ class VegetablesVespaTests {
     }
 
     @SneakyThrows
+    private String objectToString(Object object) {
+        return objectMapper.writeValueAsString(object);
+    }
+
+    @SneakyThrows
     private VespaDocument<Vegetables> jsonToObject(String json) {
         return objectMapper.readValue(json, TYPE_REF);
     }
@@ -141,5 +184,10 @@ class VegetablesVespaTests {
     @SneakyThrows
     private static URI getUri() {
         return new URI("http://localhost:8080/document/v1/shop/vegetables/docid/1");
+    }
+
+    @SneakyThrows
+    private static URI getSearchUri() {
+        return new URI("http://localhost:8080/search/");
     }
 }

@@ -6,7 +6,7 @@
 
 1. Запустить контейнер с конфигурационным сервером
     ```shell 
-    docker-compose up -d --build --no-deps 
+    docker-compose up -d --build --force-recreate
     ```
 
 2. Собрать проект
