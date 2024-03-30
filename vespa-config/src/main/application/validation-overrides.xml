@@ -1,6 +1,24 @@
 <validation-overrides>
-    <!-- Отключение правила - изменения типа индексирования -->
-    <allow until="2024-03-07" comment="изменение типа индексирования">indexing-change</allow>
-    <!-- Отключение правила - изменения типа поля -->
-    <allow until="2024-03-07" comment="изменение типа поля">field-type-change</allow>
+    <!-- Изменение типа индексирования полей в схеме данных -->
+    <allow until="2024-03-07" comment="Для локальной работы">indexing-change</allow>
+    <!-- Изменение режима индексирования (services.xml) -->
+    <allow until="2024-03-07" comment="Для локальной работы">indexing-mode-change</allow>
+    <!-- Изменение типа данных в схеме данных -->
+    <allow until="2024-03-07" comment="Для локальной работы">field-type-change</allow>
+    <!-- Изменение типа тензора -->
+    <allow until="2024-03-07" comment="Для локальной работы">tensor-type-change</allow>
+    <!-- Значительное уменьшение (> 50%) резурсов узла -->
+    <allow until="2024-03-07" comment="Для локальной работы">resources-reduction</allow>
+    <!-- Удаление кластера данных или изменение его идентификатора (services.xml) -->
+    <allow until="2024-03-07" comment="Для локальной работы">content-cluster-removal</allow>
+    <!-- Изменение глобального аттрибута в кластере данных -->
+    <allow until="2024-03-07" comment="Для локальной работы">global-document-change</allow>
+    <!-- Изменение глобальной точки входа -->
+    <allow until="2024-03-07" comment="Для локальной работы">global-endpoint-change</allow>
+    <!-- Увеличение избыточности данных -->
+    <allow until="2024-03-07" comment="Для локальной работы">redundancy-increase</allow>
+    <!-- Изыточность, равная одному, недопустима -->
+    <allow until="2024-03-07" comment="Для локальной работы">redundancy-one</allow>
+    <!-- Удаление сертификата  -->
+    <allow until="2024-03-07" comment="Для локальной работы">certificate-removal</allow>
 </validation-overrides>
