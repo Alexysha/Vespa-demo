@@ -2,25 +2,34 @@
 schema product {
     # Базовый документ продукта
     document product {
-        # Идентификатор
+        # Структура доступности в магазине
+        struct availability {
+            # Уникальный идентификатор магазина
+            field id type long {}
+            # Название магазина
+            field name type string {}
+            # Единиц товара
+            field count type int {}
+        }
+        # Идентификатор товара
         field id type long {
             indexing: summary | attribute
         }
-        # Название
+        # Название товара
         field name type string {
             indexing: summary | index
         }
-        # Производитель
-        field producer type string {
+        # Описание товара
+        field description type string {
             indexing: summary | index
         }
         # Цена
         field price type string {
             indexing: summary | attribute
         }
-        # Описание
-        field description type string {
-            indexing: summary | index
+        # Доступность в магазинах
+        field availability type array<availability> {
+            indexing: summary
         }
     }
 }

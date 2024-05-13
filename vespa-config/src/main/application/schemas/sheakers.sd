@@ -1,0 +1,18 @@
+# Схема кроссовок
+schema sneakers inherits shoes {
+    # Свойства кроссовок
+    document sneakers inherits shoes {
+        # Для какого типа спорта эти кроссовки
+        field sport type string {
+            indexing: summary | index
+        }
+        # Для какого покрытия эти кроссовки
+        field pavement type string {
+            indexing: summary | index
+        }
+        # Наличие амортизирующей стельки
+        field insole type bool {
+            indexing: summary | attribute
+        }
+    }
+}

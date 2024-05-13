@@ -1,0 +1,14 @@
+# Схема обуви
+schema shoes inherits product {
+    # Документ описывающий общие поля для любой обуви
+    document shoes inherits product {
+        # Непромокаемость
+        field moisture type bool {
+            indexing: summary | attribute
+        }
+        # Наличие молнии
+        field zipper type bool {
+            indexing: summary | attribute
+        }
+    }
+}

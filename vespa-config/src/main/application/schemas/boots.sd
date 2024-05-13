@@ -1,0 +1,18 @@
+# Схема ботинок
+schema boots inherits shoes {
+    # Документ, описывающий свойства ботинок
+    document boots inherits shoes {
+        # Сезон
+        field season type string {
+            indexing: summary
+        }
+        # Материал изготовления
+        field material type map<string, int> {
+            indexing: summary
+        }
+        # Пол
+        field gender type string {
+            indexing: summary
+        }
+    }
+}
