@@ -2,13 +2,23 @@
 schema shoes inherits product {
     # Документ описывающий общие поля для любой обуви
     document shoes inherits product {
-        # Непромокаемость
-        field moisture type bool {
-            indexing: summary | attribute
+        # Сезон
+        field season type string {
+            indexing: summary | index
         }
-        # Наличие молнии
-        field zipper type bool {
-            indexing: summary | attribute
+        # Материал изготовления
+        field material type map<string, int> {
+            indexing: summary
+            struct-field key {
+                indexing: attribute
+            }
+            struct-field value {
+                indexing: attribute
+            }
+        }
+        # Пол
+        field gender type string {
+            indexing: summary | index
         }
     }
 }

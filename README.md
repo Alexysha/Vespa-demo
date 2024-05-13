@@ -1,15 +1,16 @@
 # Демопроект Vespa
 
 ### Описание проекта 
-Представим, что мы хотим создать хранилище для нашего магазина, который торгует продуктами и техникой.
-Мы хотим получить от системы максимальную производительность в рамках поиска нужного товара. 
+Представим, что мы хотим создать хранилище для нашего магазина, который торгует обувью.
+Мы хотим получить от системы поиск с максимальной производительностью.
 Для этого мы воспользуемся Vespa.
 
 В этом проекте представлена самая простая конфигурация Vespa.
 
 Пример запросов на добавление, чтение и фильтрацию результирующих полей:
-* [VegetablesVespaTests.java](vespa-app%2Fsrc%2Ftest%2Fjava%2Fru%2Fsportmaster%2FVegetablesVespaTests.java)
-* [VespaPhoneTests.java](vespa-app%2Fsrc%2Ftest%2Fjava%2Fru%2Fsportmaster%2FVespaPhoneTests.java)
+
+- [BootsVespaTests.java](vespa-app%2Fsrc%2Ftest%2Fjava%2Fru%2Fsportmaster%2FBootsVespaTests.java)
+- [SneakersVespaTests.java](vespa-app%2Fsrc%2Ftest%2Fjava%2Fru%2Fsportmaster%2FSneakersVespaTests.java)
 
 Схема данных:
 

@@ -3,7 +3,7 @@ schema product {
     # Базовый документ продукта
     document product {
         # Структура доступности в магазине
-        struct availability {
+        struct availabilities {
             # Уникальный идентификатор магазина
             field id type long {}
             # Название магазина
@@ -28,7 +28,7 @@ schema product {
             indexing: summary | attribute
         }
         # Доступность в магазинах
-        field availability type array<availability> {
+        field availabilities type array<availabilities> {
             indexing: summary
         }
     }

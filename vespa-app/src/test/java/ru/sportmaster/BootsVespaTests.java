@@ -7,10 +7,10 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import ru.sportmaster.model.Phone;
+import ru.sportmaster.model.Availability;
+import ru.sportmaster.model.Boots;
 import ru.sportmaster.model.VespaDocument;
 import ru.sportmaster.model.VespaDocument.Fields;
-
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -18,23 +18,26 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Map;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.sportmaster.model.enums.Gender.FEMALE;
+import static ru.sportmaster.model.enums.Season.WINTER;
 
 @TestMethodOrder(OrderAnnotation.class)
-class VespaPhoneTests {
+class BootsVespaTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper().disable(FAIL_ON_UNKNOWN_PROPERTIES);
-    private final TypeReference<VespaDocument<Phone>> TYPE_REF = new TypeReference<>() {};
+    private final TypeReference<VespaDocument<Boots>> TYPE_REF = new TypeReference<>() {};
 
     @Test
     @Order(1)
     @DisplayName("Пример сохранения документа в Vespa")
-    void savePhoneTest() {
+    void saveBootsTest() {
         @Cleanup val client = HttpClient.newHttpClient();
-        val phone = getPhone();
-        val vespaDocument = getVespaDocument(phone);
+        val boots = getBoots();
+        val vespaDocument = getVespaDocument(boots);
         val json = objectToJson(vespaDocument);
         val request = HttpRequest.newBuilder()
                 .uri(getUri())
@@ -51,7 +54,7 @@ class VespaPhoneTests {
     @Test
     @Order(2)
     @DisplayName("Пример получения документа из Vespa")
-    void getPhoneTest() {
+    void getBootsTest() {
         @Cleanup val client = HttpClient.newHttpClient();
         val request = HttpRequest.newBuilder()
                 .uri(getUri())
@@ -63,7 +66,7 @@ class VespaPhoneTests {
         val statusCode = response.statusCode();
         val body = response.body();
         val result = jsonToObject(body);
-        val expected = getVespaDocument(getPhone());
+        val expected = getVespaDocument(getBoots());
 
         assertEquals(200, statusCode);
         assertEquals(expected, result);
@@ -88,49 +91,59 @@ class VespaPhoneTests {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    private Phone getPhone() {
-        val phone = new Phone();
-        phone.setId(1);
-        phone.setName("Смартфон Apple iPhone 15 128 ГБ, Dual nano SIM, розовый");
-        phone.setProducer("Apple Computer, Inc");
-        phone.setPrice(BigDecimal.valueOf(68570));
-        phone.setDescription("Встречайте iPhone 15 - ваш идеальный спутник в мире безграничных возможностей!");
-        phone.setCredit(true);
-        phone.setAbroad(false);
-        phone.setWeight(171);
-        phone.setHeight(147.6f);
-        phone.setWidth(71.6f);
-        phone.setDepth(7.8f);
-        phone.setColor("Розовый");
-        phone.setOperation("iOS 17");
-        phone.setScreen(6.1f);
-        phone.setMaterial(
-                List.of("алюминий", "стекло")
+    private Boots getBoots() {
+        val boots = new Boots();
+        boots.setId(28001450299L);
+        boots.setName("Кроссовки утепленные женские Nike City Classic");
+        boots.setDescription("Готова к зимним выходам в свет? City Classic от Nike уверены, что тебе есть куда отправиться с друзьями в выходные.");
+        boots.setPrice(
+            new BigDecimal(17_009)
         );
-
-        return phone;
+        boots.setAvailabilities(
+            getAvailabilities()
+        );
+        boots.setSeason(WINTER);
+        boots.setMaterial(
+            Map.of(
+                "Натуральная кожа", 45,
+                "Синтетическая кожа", 35,
+                "Текстиль", 20
+            )
+        );
+        boots.setGender(FEMALE);
+        boots.setMoisture(false);
+        boots.setZipper(true);
+        return boots;
     }
 
-    private VespaDocument<Phone> getVespaDocument(Phone phone) {
-        val fields = new Fields<Phone>();
-        fields.setDocument(phone);
-        val vespaDocument = new VespaDocument<Phone>();
+    private List<Availability> getAvailabilities() {
+        val availability = new Availability();
+        availability.setId(2L);
+        availability.setName("ТЦ Вегас");
+        availability.setCount(5);
+        return List.of(availability);
+    }
+
+    private VespaDocument<Boots> getVespaDocument(Boots boots) {
+        val fields = new Fields<Boots>();
+        fields.setDocument(boots);
+        val vespaDocument = new VespaDocument<Boots>();
         vespaDocument.setFields(fields);
         return vespaDocument;
     }
 
     @SneakyThrows
-    private String objectToJson(VespaDocument<Phone> document) {
+    private String objectToJson(VespaDocument<Boots> document) {
         return objectMapper.writeValueAsString(document);
     }
 
     @SneakyThrows
-    private VespaDocument<Phone> jsonToObject(String json) {
+    private VespaDocument<Boots> jsonToObject(String json) {
         return objectMapper.readValue(json, TYPE_REF);
     }
 
     @SneakyThrows
     private static URI getUri() {
-        return new URI("http://localhost:8080/document/v1/shop/phone/docid/1");
+        return new URI("http://localhost:8080/document/v1/shop/boots/docid/1");
     }
 }

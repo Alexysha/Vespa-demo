@@ -15,4 +15,11 @@ schema sneakers inherits shoes {
             indexing: summary | attribute
         }
     }
+
+    document-summary demo-summary {
+        summary pavement_demo_rename {
+            source: pavement
+        }
+        from-disk
+    }
 }

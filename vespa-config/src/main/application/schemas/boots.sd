@@ -2,17 +2,13 @@
 schema boots inherits shoes {
     # Документ, описывающий свойства ботинок
     document boots inherits shoes {
-        # Сезон
-        field season type string {
-            indexing: summary
+        # Непромокаемость
+        field moisture type bool {
+            indexing: summary | attribute
         }
-        # Материал изготовления
-        field material type map<string, int> {
-            indexing: summary
-        }
-        # Пол
-        field gender type string {
-            indexing: summary
+        # Наличие молнии
+        field zipper type bool {
+            indexing: summary | attribute
         }
     }
 }
