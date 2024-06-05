@@ -15,8 +15,9 @@ schema sneakers inherits shoes {
             indexing: summary | attribute
         }
     }
-
+    # Сводка документов, для использования нужно добавить к запросу - "presentation.summary": "demo-summary"
     document-summary demo-summary {
+        # Переименовывает поле pavement в pavement_demo_rename
         summary pavement_demo_rename {
             source: pavement
         }
