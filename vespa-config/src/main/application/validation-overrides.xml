@@ -7,7 +7,7 @@
     <allow until="2024-03-07" comment="Для локальной работы">field-type-change</allow>
     <!-- Изменение типа тензора -->
     <allow until="2024-03-07" comment="Для локальной работы">tensor-type-change</allow>
-    <!-- Значительное уменьшение (> 50%) ресурсов узла -->
+    <!-- Значительное уменьшение (>50%) ресурсов узла -->
     <allow until="2024-03-07" comment="Для локальной работы">resources-reduction</allow>
     <!-- Удаление кластера данных или изменение его идентификатора (services.xml) -->
     <allow until="2024-03-07" comment="Для локальной работы">content-cluster-removal</allow>
@@ -19,6 +19,6 @@
     <allow until="2024-03-07" comment="Для локальной работы">redundancy-increase</allow>
     <!-- Избыточность, равная одному, недопустима -->
     <allow until="2024-03-07" comment="Для локальной работы">redundancy-one</allow>
-    <!-- Удаление сертификата  -->
+    <!-- Удаление сертификата -->
     <allow until="2024-03-07" comment="Для локальной работы">certificate-removal</allow>
 </validation-overrides>
