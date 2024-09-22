@@ -3,9 +3,21 @@
 
     <container version="1.0" id="default">
         <!-- Включает поисковую часть контейнера, без него не будет работать поиск -->
-        <search/>
+        <search>
+            <chain id="default" inherits="vespa">
+                <searcher id="ru.sportmaster.processing.search.CustomSearcher" bundle="vespa-config" />
+            </chain>
+        </search>
         <!-- Включает API для работы с документами -->
         <document-api/>
+        <!-- Добавление собственных обработчиков в document-processing -->
+        <document-processing>
+            <!-- inherits - наследование другой цепочки вызовов -->
+            <chain id="custom-processing" inherits="indexing">
+                <!-- bundle — это artifactId из pom.xml -->
+                <documentprocessor id="ru.sportmaster.processing.document.CustomProcessing" bundle="vespa-config"/>
+            </chain>
+        </document-processing>
     </container>
 
     <!-- Создает кластер содержимого который хранит и индексирует документы -->
@@ -14,6 +26,8 @@
         <documents>
             <document mode="index" type="sneakers" />
             <document mode="index" type="boots" />
+            <!-- chain — это идентификатор созданной цепочки, наследуемой от indexing -->
+            <document-processing chain="custom-processing"/>
         </documents>
         <!-- Количество реплик документа в кластере -->
         <redundancy>2</redundancy>

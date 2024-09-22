@@ -15,8 +15,17 @@
     <!-- Специальная упаковка пакета для Vespa -->
     <packaging>container-plugin</packaging>
 
+    <properties>
+        <vespa.version>8.305.17</vespa.version>
+        <docproc.version>8.403.12</docproc.version>
+    </properties>
+
     <dependencies>
         <!-- Библиотека для работы с Vespa -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.yahoo.vespa</groupId>
             <artifactId>container</artifactId>
