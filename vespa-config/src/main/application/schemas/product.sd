@@ -1,5 +1,9 @@
 # Базовая схема продукта
 schema product {
+    # Устанавливаем язык для всех полей данной схемы
+    field language type string {
+        indexing: "ru" | set_language
+    }
     # Базовый документ продукта
     document product {
         # Структура доступности в магазине
@@ -31,5 +35,14 @@ schema product {
         field availabilities type array<availabilities> {
             indexing: summary
         }
+    }
+    # Сводка, которая выводит только поле с описанием и его токены
+    document-summary get-tokens {
+        summary description {}
+        summary description_tokens {
+            source: description
+            tokens
+        }
+        from-disk
     }
 }
