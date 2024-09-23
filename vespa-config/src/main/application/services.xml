@@ -2,6 +2,12 @@
 <services version="1.0">
 
     <container version="1.0" id="default">
+        <!-- Включает Lucene linguistics вместо OpenNLP -->
+        <components>
+            <component id="linguistics" bundle="vespa-config" class="com.yahoo.language.lucene.LuceneLinguistics">
+                <config name="com.yahoo.language.lucene.lucene-analysis"/>
+            </component>
+        </components>
         <!-- Включает поисковую часть контейнера, без него не будет работать поиск -->
         <search>
             <chain id="default" inherits="vespa">

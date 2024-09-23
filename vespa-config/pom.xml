@@ -18,6 +18,7 @@
     <properties>
         <vespa.version>8.305.17</vespa.version>
         <docproc.version>8.403.12</docproc.version>
+        <lucene-linguistics.version>8.412.20</lucene-linguistics.version>
     </properties>
 
     <dependencies>
@@ -30,6 +31,18 @@
             <groupId>com.yahoo.vespa</groupId>
             <artifactId>container</artifactId>
             <version>${vespa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.vespa</groupId>
+            <artifactId>lucene-linguistics</artifactId>
+            <version>${lucene-linguistics.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.vespa</groupId>
+            <artifactId>linguistics</artifactId>
+            <version>${lucene-linguistics.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
