@@ -22,10 +22,12 @@ schema product {
         # Название товара
         field name type string {
             indexing: summary | index
+            index: enable-bm25
         }
         # Описание товара
         field description type string {
             indexing: summary | index
+            index: enable-bm25
         }
         # Цена
         field price type string {
@@ -44,5 +46,31 @@ schema product {
             tokens
         }
         from-disk
+    }
+    # Набор полей, по которым будет выполняться текстовый поиск
+    fieldset default {
+        fields: name, description
+    }
+    # Ранжирование результата при помощи nativeRank
+    rank-profile native inherits default {
+        first-phase {
+            expression: nativeRank(name, description)
+        }
+        # Выводит показатель ранжирования по каждому полю
+        match-features {
+            nativeRank(name)
+            nativeRank(description)
+        }
+    }
+    # Ранжирование результата с помощью bm25
+    rank-profile bm25 inherits default {
+        first-phase {
+            expression: bm25(name) + bm25(description)
+        }
+        # Выводит показатель ранжирования по каждому полю
+        match-features {
+            bm25(name)
+            bm25(description)
+        }
     }
 }
